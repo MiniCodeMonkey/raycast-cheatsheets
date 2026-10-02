@@ -1,4 +1,5 @@
 import { Action, ActionPanel, Detail, getPreferenceValues, Icon, LaunchProps, List, openExtensionPreferences } from "@raycast/api";
+import { useState } from "react";
 import { existsSync, readdirSync, readFileSync } from "fs";
 import { homedir } from "os";
 import { extname, join, parse } from "path";
@@ -41,16 +42,21 @@ function SheetDetail({ sheet }: { sheet: Sheet }) {
   );
 }
 
-export default function Command(props: LaunchProps<{ launchContext: { sheet?: string } }>) {
+export default function Command(props: LaunchProps<{ arguments: { sheet?: string } }>) {
   const sheets = loadSheets();
+  const query = props.arguments.sheet?.trim().toLowerCase() ?? "";
+  const [searchText, setSearchText] = useState(query);
 
-  const requested = sheets.find((sheet) => sheet.name === props.launchContext?.sheet);
+  // An exact name, or a prefix only one sheet starts with, opens that sheet directly.
+  const exact = sheets.find((sheet) => sheet.name.toLowerCase() === query);
+  const prefixed = sheets.filter((sheet) => sheet.name.toLowerCase().startsWith(query));
+  const requested = query ? (exact ?? (prefixed.length === 1 ? prefixed[0] : undefined)) : undefined;
   if (requested) {
     return <SheetDetail sheet={requested} />;
   }
 
   return (
-    <List isShowingDetail searchBarPlaceholder="Search cheat sheets">
+    <List isShowingDetail searchBarPlaceholder="Search cheat sheets" searchText={searchText} onSearchTextChange={setSearchText}>
       <List.EmptyView
         icon={Icon.Document}
         title="No cheat sheets yet"
