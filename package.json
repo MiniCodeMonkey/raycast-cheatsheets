@@ -3,7 +3,7 @@
   "name": "cheatsheets",
   "title": "Cheat Sheets",
   "description": "Browse and preview your Markdown cheat sheets inside Raycast",
-  "icon": "icon.png",
+  "icon": "extension-icon.png",
   "author": "mathias",
   "license": "MIT",
   "commands": [
