@@ -1,0 +1,39 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "cheatsheets",
+  "title": "Cheat Sheets",
+  "description": "Browse and preview your Markdown cheat sheets inside Raycast",
+  "icon": "icon.png",
+  "author": "mathias",
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "index",
+      "title": "Cheatsheet",
+      "description": "Search cheat sheets with a live preview",
+      "mode": "view"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "typescript": "^5.6.0"
+  },
+  "scripts": {
+    "dev": "ray develop",
+    "build": "ray build -e dist"
+  },
+  "preferences": [
+    {
+      "name": "directory",
+      "type": "textfield",
+      "required": false,
+      "default": "~/cheatsheets",
+      "title": "Cheat Sheet Folder",
+      "description": "Folder of .md (or other) files to list. ~ expands to your home folder."
+    }
+  ]
+}
